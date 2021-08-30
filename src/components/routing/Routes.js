@@ -31,6 +31,9 @@ function Routes () {
                 <Route path="/pricing">
                     <Pricing />
                 </Route>
+                <Route path="/">
+                    <SignInSide /> 
+                </Route>
             </Switch>
         </Router>
     )
