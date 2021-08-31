@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Redirect, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { logicalExpression } from '@babel/types';
 
 function Copyright() {
   return (
@@ -57,8 +60,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+async function loginUser(credentials) {
+  return fetch('http://localhost:3003/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+export default function SignInSide({ setToken }) {
+
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+
   const classes = useStyles();
+  // const history = useHistory();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    console.log("submitted username is: ", username);
+    console.log("submitted password is: ", password);
+    const data = await loginUser({
+      username,
+      password
+    })
+    console.log("data returned from server: ", data)
+    if(data.token) {
+      setToken(data.token);
+      localStorage.setItem('bio-token', data.token);
+      return <Redirect to="/dashboard" />
+    }
+    
+  }
+
+  const handleUserNameChange = e => {
+    console.log(e)
+    setUserName(e);
+  }
+
+  const handlePasswordChange = e => {
+    console.log(e);
+    setPassword(e);
+  }
+
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -72,8 +119,9 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
+              onChange={e => handleUserNameChange(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -85,6 +133,7 @@ export default function SignInSide() {
               autoFocus
             />
             <TextField
+              onChange={e => handlePasswordChange(e.target.value)}
               variant="outlined"
               margin="normal"
               required
@@ -129,3 +178,7 @@ export default function SignInSide() {
     </Grid>
   );
 }
+
+// SignInSide.PropTypes = {
+//   setToken: PropTypes.func.isRequired
+// }
