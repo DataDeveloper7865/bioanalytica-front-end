@@ -16,23 +16,20 @@ function Routes () {
     return (
         <Router>
             <Switch>
-                <Route path="/signup">
-                    <SignUp />
-                </Route>
-                <Route path="/signin">
-                    <SignInSide /> 
-                </Route>
-                <Route path="/checkout">
-                    <Checkout />  
-                </Route>
                 <Route path="/dashboard">
                     <Dashboard />
+                </Route>
+                <Route path="/signup">
+                    <SignUp />
                 </Route>
                 <Route path="/pricing">
                     <Pricing />
                 </Route>
-                <Route path="/">
-                    <SignInSide /> 
+                <Route path="/checkout">
+                    <Checkout />  
+                </Route>
+                <Route exact path="/">
+                    <Dashboard />
                 </Route>
             </Switch>
         </Router>
