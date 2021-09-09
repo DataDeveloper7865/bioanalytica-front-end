@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Bioanalytica LLC
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -46,8 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({ setToken, setSignUp}) {
   const classes = useStyles();
+
+  const handleLinkClick = e => {
+    setSignUp(false);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -125,7 +129,8 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              {/* <Link href="/signin" variant="body2"> */}
+              <Link onClick={() => handleLinkClick()} variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
