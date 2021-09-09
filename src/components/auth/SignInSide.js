@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Bioanalytica LLC
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -71,10 +71,11 @@ async function loginUser(credentials) {
     .then(data => data.json())
 }
 
-export default function SignInSide({ setToken }) {
+export default function SignInSide({ setToken, setSignUp }) {
 
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [redirect, setRedirect] = useState(false);
 
   const classes = useStyles();
   // const history = useHistory();
@@ -91,7 +92,8 @@ export default function SignInSide({ setToken }) {
     if(data.token) {
       setToken(data.token);
       localStorage.setItem('bio-token', data.token);
-      return <Redirect to="/dashboard" />
+      setRedirect(true);
+      // return <Redirect to="/dashboard" />
     }
     
   }
@@ -104,6 +106,14 @@ export default function SignInSide({ setToken }) {
   const handlePasswordChange = e => {
     console.log(e);
     setPassword(e);
+  }
+
+  const handleLinkClick = e => {
+    setSignUp(true);
+  }
+
+  if (redirect) {
+    return <Redirect to="/dashboard" />
   }
 
 
@@ -164,7 +174,7 @@ export default function SignInSide({ setToken }) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+              <Link onClick={() => handleLinkClick()} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
