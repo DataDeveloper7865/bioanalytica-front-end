@@ -22,13 +22,14 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import Avatar from '@material-ui/core/Avatar';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Bioanalytica LLC
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -146,9 +147,9 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Avatar badgeContent={4} color="secondary">
               <NotificationsIcon />
-            </Badge>
+            </Avatar>
           </IconButton>
         </Toolbar>
       </AppBar>
